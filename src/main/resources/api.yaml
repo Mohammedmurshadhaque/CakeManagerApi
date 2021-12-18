@@ -1,0 +1,76 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Cake Manager
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080/
+tags:
+  - cakeManager
+paths:
+  /:
+    get:
+      summary: List all Cakes
+      tags:
+        - cakeManager
+      operationId: listCakes
+      responses:
+        '200':
+          description: A paged array of pets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cakes"
+  /cakes/{employeeId}:
+    get:
+      summary: Info for a specific pet
+      tags:
+        - cakeManager
+      operationId: listCakesByEmployeeId
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: The employee id to retrieve the list of cakes
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cakes"
+  /cakes:
+    post:
+      summary: Add a new Cake
+      tags:
+        - cakeManager
+      requestBody:
+        description: Add a new Cake
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cake'
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    Cake:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    Cakes:
+      type: array
+      items:
+        $ref: "#/components/schemas/Cake"
